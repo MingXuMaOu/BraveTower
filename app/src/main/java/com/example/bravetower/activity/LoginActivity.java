@@ -29,7 +29,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         //初始化组件
         initModule();
         //初始化图片
-//        new MyBitmapManager(this).initBitmap();
+        new MyBitmapManager(this).initBitmap();
 
     }
 
@@ -51,6 +51,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             //跳转到加载页面
             Intent intent = LoadingActivity.newIntent(this);
             startActivity(intent);
+            finish();
         }else if(v == mDoubleText){
             Toast.makeText(this, "双人", Toast.LENGTH_SHORT).show();
         }
