@@ -11,22 +11,31 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.bravetower.entity.Actor;
+import com.example.bravetower.entity.Npc;
 import com.example.bravetower.manager.DeviceManager;
 import com.example.bravetower.manager.ImgArrManager;
 import com.example.bravetower.manager.MyBitmapManager;
 
-public class GameView extends View {
+public class GameView extends View implements Runnable{
 
     private Paint paint;
 
     private Bitmap bitmapBg;
     private Bitmap bitmapGoods;
 
+    private Actor actor;
+    private Npc npc;
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
         bitmapBg = MyBitmapManager.getBitmapImgBg();
         bitmapGoods = MyBitmapManager.getBitmapGoods();
+
+        npc = Npc.getNpc();
+        actor = Actor.getActor(context);
+        new Thread(this).start();
     }
 
     @Override
@@ -47,6 +56,9 @@ public class GameView extends View {
         drawImageByArr(canvas,bitmapBg,ImgArrManager.stairImageArr,24);
         //绘制物品
         drawImageByArr(canvas,bitmapGoods,ImgArrManager.goodsImageArr,4);
+        actor.drawActor(canvas);
+
+        npc.drawNpc(canvas);
     }
 
     public void drawImageByArr(Canvas canvas, Bitmap image, int[][] arrImg,int rowSize) {
@@ -80,5 +92,17 @@ public class GameView extends View {
         dst.bottom = (row + 1) * DeviceManager.heightSize;
 
         canvas.drawBitmap(bitmap,src,dst,null);
+    }
+
+    @Override
+    public void run() {
+        while (!Thread.currentThread().isInterrupted()){
+            try{
+                Thread.sleep(100);
+            }catch (InterruptedException e){
+                Thread.currentThread().interrupt();
+            }
+            postInvalidate();
+        }
     }
 }

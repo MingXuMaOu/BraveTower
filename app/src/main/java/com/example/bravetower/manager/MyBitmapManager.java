@@ -16,6 +16,8 @@ public class MyBitmapManager extends View {
     private  static int bgHeightNum = 16;
     private static int bgWidthSize;
     private static int bgHeightSize;
+    private static Bitmap bitmapNpcImg;       //得到NPC图片
+    private static Bitmap bitmapActorImg;     //得到玩家图片
 
     public MyBitmapManager(Context context) {
         super(context);
@@ -25,6 +27,8 @@ public class MyBitmapManager extends View {
         bitmapMtLoadingbg = ((BitmapDrawable) getResources().getDrawable(R.drawable.mtlodingbg)).getBitmap();
         bitmapImgBg = ((BitmapDrawable) getResources().getDrawable(R.drawable.imgall)).getBitmap();
         bitmapGoods = ((BitmapDrawable) getResources().getDrawable(R.drawable.goods)).getBitmap();
+        bitmapNpcImg = ((BitmapDrawable) getResources().getDrawable(R.drawable.npcimg)).getBitmap();
+        bitmapActorImg = ((BitmapDrawable) getResources().getDrawable(R.drawable.myactor)).getBitmap();
         initBitmapSize();
     }
 
@@ -73,5 +77,21 @@ public class MyBitmapManager extends View {
 
     public static void setBitmapGoods(Bitmap bitmapGoods) {
         MyBitmapManager.bitmapGoods = bitmapGoods;
+    }
+
+    public static Bitmap getBitmapNpcImg() {
+        return bitmapNpcImg;
+    }
+
+    public static void setBitmapNpcImg(Bitmap bitmapNpcImg) {
+        MyBitmapManager.bitmapNpcImg = bitmapNpcImg;
+    }
+
+    public static Bitmap getBitmapActorImg() {
+        return bitmapActorImg;
+    }
+
+    public static void setBitmapActorImg(Bitmap bitmapActorImg) {
+        MyBitmapManager.bitmapActorImg = bitmapActorImg;
     }
 }

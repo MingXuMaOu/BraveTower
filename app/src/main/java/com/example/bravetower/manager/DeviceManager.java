@@ -23,6 +23,7 @@ public class DeviceManager {
         height = metrics.heightPixels;
 
         widthSize = width / widthNum;
-        heightSize = height / heightNum;
+//        heightSize = height / heightNum;
+        heightSize = widthSize;
     }
 }

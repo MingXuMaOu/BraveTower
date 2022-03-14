@@ -1,28 +1,33 @@
 package com.example.bravetower.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.bravetower.R;
+import com.example.bravetower.entity.Actor;
 import com.example.bravetower.manager.ImgArrManager;
 
-public class GameActivity extends BaseActivity implements View.OnClickListener {
+public class GameActivity extends BaseActivity{
+
+    public Handler handler = new Handler(Looper.myLooper()){
+
+    };
 
     private ImageView upBt;
     private ImageView downBt;
     private ImageView leftBt;
     private ImageView rightBt;
+
+    private Actor actor;
+
+    private OnClickBtn onClickBtn = new OnClickBtn();
 
 
     public static Intent newIntent(Activity activity){
@@ -34,8 +39,11 @@ public class GameActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        actor = Actor.getActor(this);
         //加载本层信息
         ImgArrManager.getZAWInfo();
+        actor.setX(ImgArrManager.acX);
+        actor.setY(ImgArrManager.acY);
 
         setContentView(R.layout.activity_game);
 
@@ -49,23 +57,42 @@ public class GameActivity extends BaseActivity implements View.OnClickListener {
         leftBt = findViewById(R.id.control_left);
         rightBt = findViewById(R.id.control_right);
 
-        upBt.setOnClickListener(this);
-        downBt.setOnClickListener(this);
-        leftBt.setOnClickListener(this);
-        rightBt.setOnClickListener(this);
+        OnTouch onTouch = new OnTouch();
+
+        upBt.setOnTouchListener(onTouch);
+        downBt.setOnTouchListener(onTouch);
+        leftBt.setOnTouchListener(onTouch);
+        rightBt.setOnTouchListener(onTouch);
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v == upBt){
-            Toast.makeText(this, "Up", Toast.LENGTH_SHORT).show();
-        }else if(v == downBt){
-            Toast.makeText(this, "down", Toast.LENGTH_SHORT).show();
-        }else if(v == leftBt){
-            Toast.makeText(this, "left", Toast.LENGTH_SHORT).show();
-        }else if(v == rightBt){
-            Toast.makeText(this, "right", Toast.LENGTH_SHORT).show();
-        }
 
+
+    class OnTouch implements View.OnTouchListener{
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                onClickBtn.v = v;
+                handler.post(onClickBtn);
+            }else if(event.getAction() == MotionEvent.ACTION_UP){
+                handler.removeCallbacks(onClickBtn);
+            }
+            return false;
+        }
+    }
+
+    class OnClickBtn implements Runnable{
+        int ax = 0;
+        int ay = 0;
+        View v = null;
+        @Override
+        public void run() {
+            actorCheckAndMove();
+            handler.postDelayed(onClickBtn,80);
+
+        }
+        private void actorCheckAndMove(){
+
+        }
     }
 }
