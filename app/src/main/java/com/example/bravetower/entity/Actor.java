@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.util.Log;
 
 import com.example.bravetower.R;
+import com.example.bravetower.manager.DeviceManager;
 import com.example.bravetower.manager.DrawImgArr;
 import com.example.bravetower.manager.MyBitmapManager;
 
@@ -39,10 +40,10 @@ public class Actor implements Runnable{
         src.top = fx * MyBitmapManager.getBgHeightSize();
         src.bottom = (fx + 1) * MyBitmapManager.getBgHeightSize();
         Rect dst = new Rect();
-        dst.left = x * 72;
-        dst.right = x * 72+ 72;
-        dst.top = y * 75;
-        dst.bottom = y * 75 + 75;
+        dst.left = x;
+        dst.right = x + DeviceManager.widthSize;
+        dst.top = y;
+        dst.bottom = y + DeviceManager.heightSize;
         canvas.drawBitmap(bitmap,src,dst,null);
     }
 

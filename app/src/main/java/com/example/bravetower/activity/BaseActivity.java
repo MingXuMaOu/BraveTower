@@ -14,10 +14,13 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setFullscreen(false,false);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setFullscreen(false,false);
+    }
 
     public void setFullscreen(boolean isShowStatusBar, boolean isShowNavigationBar) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

@@ -2,8 +2,8 @@ package com.example.bravetower.manager;
 
 public class DrawImgArr {
 
-    public static int acx001 = 7;
-    public static int acy001 = 13;
+    public static int acx001 = 7 * DeviceManager.widthSize;
+    public static int acy001 = 13 * DeviceManager.heightSize;
 
     public static  int[][] bgImageArr001={
             { 294, 294, 294, 294, 294, 294, 294, 294, 294, 294, 294, 294, 294,294, 294 },
