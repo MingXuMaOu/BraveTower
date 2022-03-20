@@ -5,11 +5,14 @@
       <map>
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable-anydpi/ic_register_menu.xml" value="0.20277777777777778" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable/actor_background.xml" value="0.215625" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable/font_bg.xml" value="0.10520833333333333" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable/ic_launcher_background.xml" value="0.20277777777777778" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable/load_progress.xml" value="0.2" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable/profile_background.xml" value="0.215625" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable/register_menu_background.xml" value="0.20277777777777778" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/drawable/register_text_background.xml" value="0.20277777777777778" />
-        <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/layout/activity_game.xml" value="0.22" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/layout/activity_game.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/layout/activity_loading.xml" value="0.22" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/BraveTower/app/src/main/res/layout/activity_main.xml" value="0.9032258064516129" />
@@ -25,7 +28,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.22" />
+        <option name="scale" value="0.16666666666666666" />
       </ProjectState>
     </option>
   </component>

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bravetower.R;
@@ -23,12 +24,24 @@ public class GameActivity extends BaseActivity{
 
     };
 
+    private TextView actorLeve;
+    private TextView actorMoney;
+    private TextView actorAttack;
+    private TextView actorDefense;
+    private TextView actorHeart;
+    private TextView yellowKey;
+    private TextView blueKey;
+    private TextView redKey;
+
     private ImageView upBt;
     private ImageView downBt;
     private ImageView leftBt;
     private ImageView rightBt;
 
     private Actor actor;
+    private int indexRow;
+    private int indexColumn;
+    private int indexValue;
 
     private OnClickBtn onClickBtn = new OnClickBtn();
 
@@ -47,14 +60,25 @@ public class GameActivity extends BaseActivity{
         ImgArrManager.getZAWInfo();
         actor.setX(ImgArrManager.acX);
         actor.setY(ImgArrManager.acY);
-
         setContentView(R.layout.activity_game);
 
+        //初始化组件
         initData();
+        //初始化角色数据
+        initActor();
 
     }
 
     private void initData(){
+        actorLeve = findViewById(R.id.actor_level);
+        actorMoney = findViewById(R.id.actor_money);
+        actorAttack = findViewById(R.id.actor_attack);
+        actorDefense = findViewById(R.id.actor_defense);
+        actorHeart = findViewById(R.id.actor_heart);
+        yellowKey = findViewById(R.id.yellow_key);
+        blueKey = findViewById(R.id.blue_key);
+        redKey = findViewById(R.id.red_key);
+
         upBt = findViewById(R.id.control_up);
         downBt = findViewById(R.id.control_down);
         leftBt = findViewById(R.id.control_left);
@@ -66,6 +90,18 @@ public class GameActivity extends BaseActivity{
         downBt.setOnTouchListener(onTouch);
         leftBt.setOnTouchListener(onTouch);
         rightBt.setOnTouchListener(onTouch);
+    }
+
+    private void initActor(){
+        actorLeve.setText("lv " + actor.getLevel());
+        actorMoney.setText(actor.getMoney() + "");
+        actorAttack.setText(actor.getAttack() + "");
+        actorDefense.setText(actor.getDefense() + "");
+        actorHeart.setText(actor.getHp() + "");
+        yellowKey.setText(actor.getYellowKey() + "");
+        blueKey.setText(actor.getBlueKey() + "");
+        redKey.setText(actor.getRedKey() + "");
+
     }
 
 
@@ -92,6 +128,8 @@ public class GameActivity extends BaseActivity{
         @Override
         public void run() {
             actorCheckAndMove();
+            initActor();
+
             handler.postDelayed(onClickBtn,80);
 
         }
@@ -122,18 +160,35 @@ public class GameActivity extends BaseActivity{
         }
         private int checkBound(int ax,int ay){
             if(ImgArrManager.zawImgaeArr == null || checkWall(ImgArrManager.zawImgaeArr,ax,ay)){
-                return 0;
-            }else {
-                return 1;
+                if(ImgArrManager.npcImageArr == null || checkWall(ImgArrManager.npcImageArr,ax,ay)){
+                    return 0; //通过
+                }else{
+                    return 2; //遇到npc
+                }
+
+            }
+
+            else {
+                return 1; //遇到障碍物
             }
         }
 
 
         private void checkResult(int result,int ax,int ay){
             if(result == 0) {
-                actor.setX(actor.getX() + ax);
-                actor.setY(actor.getY() + ay);
+
             }else {
+            }
+
+            switch (result){
+                case 0:
+                    actor.setX(actor.getX() + ax);
+                    actor.setY(actor.getY() + ay);
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    Toast.makeText(GameActivity.this, "NPC", Toast.LENGTH_SHORT).show();
             }
         }
         //判断是否遇到障碍物
@@ -144,6 +199,10 @@ public class GameActivity extends BaseActivity{
                 for (int column = 0; column < wall[row].length;column++){
                     int value = wall[row][column];
                     if(value !=0){
+                        indexRow = row;
+                        indexColumn = column;
+                        indexValue = value;
+
                         //左方向判断
                         boolean b = (y >= row * DeviceManager.widthSize && y < (row + 1) * DeviceManager.widthSize) || (y + DeviceManager.widthSize > row * DeviceManager.widthSize && y + DeviceManager.widthSize <= (row + 1) * DeviceManager.widthSize);
                         if(actor.getFx() == 1){

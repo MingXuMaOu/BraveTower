@@ -13,11 +13,25 @@ import com.example.bravetower.manager.MyBitmapManager;
 
 public class Actor implements Runnable{
 
+    private String name = "勇者";
+    private int level = 1;
+    private int hp = 1000;
+    private int attack = 50;
+    private int defense = 10;
+    private int redKey = 1;
+    private int yellowKey = 1;
+    private int blueKey = 1;
+    private int money = 200;
+    private int exp = 100;
+
     private int x;      //x坐标
     private int y;      //y坐标
     private int currentIndex;
     private int fx;     //朝向
     private Bitmap bitmap;
+    private int currentFloor;
+    private int maxFloor;
+    public static boolean floorFlag = false; //false为向上走，true为向下走
 
     private static Actor actor;
 
@@ -60,6 +74,118 @@ public class Actor implements Runnable{
                 Log.i(Actor.class.toString(),e.getMessage());
             }
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public int getRedKey() {
+        return redKey;
+    }
+
+    public void setRedKey(int redKey) {
+        this.redKey = redKey;
+    }
+
+    public int getYellowKey() {
+        return yellowKey;
+    }
+
+    public void setYellowKey(int yellowKey) {
+        this.yellowKey = yellowKey;
+    }
+
+    public int getBlueKey() {
+        return blueKey;
+    }
+
+    public void setBlueKey(int blueKey) {
+        this.blueKey = blueKey;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+
+    public void setCurrentFloor(int currentFloor) {
+        this.currentFloor = currentFloor;
+    }
+
+    public int getMaxFloor() {
+        return maxFloor;
+    }
+
+    public void setMaxFloor(int maxFloor) {
+        this.maxFloor = maxFloor;
+    }
+
+    public static boolean isFloorFlag() {
+        return floorFlag;
+    }
+
+    public static void setFloorFlag(boolean floorFlag) {
+        Actor.floorFlag = floorFlag;
+    }
+
+    public static Actor getActor() {
+        return actor;
+    }
+
+    public static void setActor(Actor actor) {
+        Actor.actor = actor;
     }
 
     public int getX() {
