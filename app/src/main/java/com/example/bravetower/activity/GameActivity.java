@@ -8,11 +8,20 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.example.bravetower.R;
+import com.example.bravetower.dialog.ProgressDialogUtils;
+import com.example.bravetower.dialog.TalkDialog;
 import com.example.bravetower.entity.Actor;
 import com.example.bravetower.manager.DeviceManager;
 import com.example.bravetower.manager.ImgArrManager;
@@ -32,11 +41,14 @@ public class GameActivity extends BaseActivity{
     private TextView yellowKey;
     private TextView blueKey;
     private TextView redKey;
+    private TextView leftDialogTx;  //对话框
+    private TextView rightDialogTx;
 
     private ImageView upBt;
     private ImageView downBt;
     private ImageView leftBt;
     private ImageView rightBt;
+    private ImageView confirmBt;
 
     private Actor actor;
     private int indexRow;
@@ -44,6 +56,7 @@ public class GameActivity extends BaseActivity{
     private int indexValue;
 
     private OnClickBtn onClickBtn = new OnClickBtn();
+    private int result;
 
 
     public static Intent newIntent(Activity activity){
@@ -78,18 +91,23 @@ public class GameActivity extends BaseActivity{
         yellowKey = findViewById(R.id.yellow_key);
         blueKey = findViewById(R.id.blue_key);
         redKey = findViewById(R.id.red_key);
+        leftDialogTx = findViewById(R.id.left_dialog_tx);
+        rightDialogTx = findViewById(R.id.right_dialog_tx);
 
         upBt = findViewById(R.id.control_up);
         downBt = findViewById(R.id.control_down);
         leftBt = findViewById(R.id.control_left);
         rightBt = findViewById(R.id.control_right);
+        confirmBt = findViewById(R.id.confirm_bt);
 
+        OnClick onClick = new OnClick();
         OnTouch onTouch = new OnTouch();
 
         upBt.setOnTouchListener(onTouch);
         downBt.setOnTouchListener(onTouch);
         leftBt.setOnTouchListener(onTouch);
         rightBt.setOnTouchListener(onTouch);
+        confirmBt.setOnClickListener(onClick);
     }
 
     private void initActor(){
@@ -103,8 +121,88 @@ public class GameActivity extends BaseActivity{
         redKey.setText(actor.getRedKey() + "");
 
     }
+    class OnClick implements View.OnClickListener{
 
+        @Override
+        public void onClick(View v) {
+            if(v == confirmBt){
+                if(result == 2) {
+                    ProgressDialogUtils.showProgressDialog(GameActivity.this,"测试");
+//                    FragmentManager manager = getSupportFragmentManager();
+//                    TalkDialog talkDialog = new TalkDialog();
+//                    talkDialog.show(manager,"测试");
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+//                    AlertDialog dialog = builder.setTitle("测试")
+//                            .create();
+//                    dialog.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//                    dialog.getWindow().getDecorView().setSystemUiVisibility(View.GONE);
+//                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//                    dialog.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+//                        @Override
+//                        public void onSystemUiVisibilityChange(int visibility) {
+//                            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+//                                    //布局位于状态栏下方
+//                                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+//                                    //全屏
+//                                    View.SYSTEM_UI_FLAG_FULLSCREEN |
+//                                    //隐藏导航栏
+//                                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+//                                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+//                            uiOptions |= 0x00001000;
+//                            dialog.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+//                        }
+//                    });
+//                    View decorView = dialog.getWindow().getDecorView();
+//                    int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//
+//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//
+//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+//
+//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+//
+//                    decorView.setSystemUiVisibility(uiOptions);
+//                    dialog.show();
+//                    if (indexColumn < 8) {
+//                        leftDialogTx.setVisibility(View.VISIBLE);
+////                        leftDialogTx.setText("测试测试测算出");
+//
+//                        leftDialogTx.layout(100,100,500,500);
+////                        leftDialogTx.postInvalidate();
+//
+//
+////                        moveDialog();
+//
+//                    } else {
+//                        rightDialogTx.setVisibility(View.VISIBLE);
+//                        rightDialogTx.setText("测试");
+//                        rightDialogTx.postInvalidate();
+//                        rightDialogTx.layout(100,300,500,800);
+//
+////                        moveDialog();
+//
+//                    }
+                }
+            }
+        }
+    }
 
+    private void moveDialog(){
+        int left = indexColumn * DeviceManager.widthSize;
+        int top = indexRow * DeviceManager.widthSize;
+//        dialogTx.layout(left,top,left + dialogTx.getWidth(),dialogTx.getHeight());
+//        dialogTx.layout(100,100,500,500);
+        System.out.println("测试");
+//        dialogTx.layout
+//        LinearLayoutCompat.LayoutParams params = (LinearLayoutCompat.LayoutParams) dialogLayout.getLayoutParams();
+//        params.height = 300;
+//        dialogLayout.requestLayout();
+
+    }
 
     class OnTouch implements View.OnTouchListener{
 
@@ -134,7 +232,7 @@ public class GameActivity extends BaseActivity{
 
         }
         private void actorCheckAndMove(){
-            int result = 0;
+            result = 0;
             if(v == upBt){
                 ax = 0;
                 ay = -DeviceManager.heightSize / 4;
@@ -164,6 +262,7 @@ public class GameActivity extends BaseActivity{
                     return 0; //通过
                 }else{
                     return 2; //遇到npc
+
                 }
 
             }
@@ -188,7 +287,11 @@ public class GameActivity extends BaseActivity{
                 case 1:
                     break;
                 case 2:
-                    Toast.makeText(GameActivity.this, "NPC", Toast.LENGTH_SHORT).show();
+                    leftDialogTx.setText("测试");
+
+                    break;
+
+
             }
         }
         //判断是否遇到障碍物

@@ -14,11 +14,34 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setFullscreen(false,false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        System.out.println("开始");
+        setFullscreen(false,false);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.out.println("暂停");
+        setFullscreen(false,false);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println("测试start");
+//        setFullscreen(false,false);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        System.out.println("测试stop");
         setFullscreen(false,false);
     }
 
