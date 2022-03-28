@@ -2,6 +2,7 @@ package com.example.bravetower.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.bravetower.R;
 import com.example.bravetower.dialog.ProgressDialogUtils;
 import com.example.bravetower.dialog.TalkDialog;
+import com.example.bravetower.dialog.TalkDialogUtils;
 import com.example.bravetower.entity.Actor;
 import com.example.bravetower.manager.DeviceManager;
 import com.example.bravetower.manager.ImgArrManager;
@@ -127,65 +129,7 @@ public class GameActivity extends BaseActivity{
         public void onClick(View v) {
             if(v == confirmBt){
                 if(result == 2) {
-                    ProgressDialogUtils.showProgressDialog(GameActivity.this,"测试");
-//                    FragmentManager manager = getSupportFragmentManager();
-//                    TalkDialog talkDialog = new TalkDialog();
-//                    talkDialog.show(manager,"测试");
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-//                    AlertDialog dialog = builder.setTitle("测试")
-//                            .create();
-//                    dialog.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//                    dialog.getWindow().getDecorView().setSystemUiVisibility(View.GONE);
-//                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//                    dialog.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-//                        @Override
-//                        public void onSystemUiVisibilityChange(int visibility) {
-//                            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-//                                    //布局位于状态栏下方
-//                                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-//                                    //全屏
-//                                    View.SYSTEM_UI_FLAG_FULLSCREEN |
-//                                    //隐藏导航栏
-//                                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-//                                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-//                            uiOptions |= 0x00001000;
-//                            dialog.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-//                        }
-//                    });
-//                    View decorView = dialog.getWindow().getDecorView();
-//                    int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//
-//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//
-//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-//
-//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-//
-//                    decorView.setSystemUiVisibility(uiOptions);
-//                    dialog.show();
-//                    if (indexColumn < 8) {
-//                        leftDialogTx.setVisibility(View.VISIBLE);
-////                        leftDialogTx.setText("测试测试测算出");
-//
-//                        leftDialogTx.layout(100,100,500,500);
-////                        leftDialogTx.postInvalidate();
-//
-//
-////                        moveDialog();
-//
-//                    } else {
-//                        rightDialogTx.setVisibility(View.VISIBLE);
-//                        rightDialogTx.setText("测试");
-//                        rightDialogTx.postInvalidate();
-//                        rightDialogTx.layout(100,300,500,800);
-//
-////                        moveDialog();
-//
-//                    }
+                    TalkDialogUtils.showDialog(GameActivity.this,"测试");
                 }
             }
         }

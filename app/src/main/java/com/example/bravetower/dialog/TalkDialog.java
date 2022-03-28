@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,102 +20,69 @@ import androidx.fragment.app.DialogFragment;
 import com.example.bravetower.R;
 
 
-public class TalkDialog extends DialogFragment {
+public class TalkDialog extends AlertDialog {
+    private Window window;
+    public TalkDialog(@NonNull Context context) {
+        super(context);
+        this.window = getWindow();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("测试++++oncreate");
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        System.out.println("测试++++on're'sume");
-        setFullscreen(false,false);
+    public void show() {
+        focusNotAle(window);
+        super.show();
+        hideNavigationBar(window);
+        clearFocusNotAle(window);
     }
 
-
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-//        setFullscreen(false,false);
-//        hideBottomUIMenu();
-        View dialog = getLayoutInflater().inflate(R.layout.fragment_talk_dialog,null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(dialog);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-//        getActivity().getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-//            @Override
-//            public void onSystemUiVisibilityChange(int visibility) {
-//                hideBottomUIMenu();
-//            }
-//        });
-        return builder.create();
+    private void focusNotAle(Window window) {
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
     }
 
-    protected void hideBottomUIMenu() {
-        //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = getActivity().getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            //for new api versions.
-            View decorView = getActivity().getWindow().getDecorView();
-//            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-//            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                    | View.SYSTEM_UI_FLAG_IMMERSIVE | View.SYSTEM_UI_FLAG_FULLSCREEN;
-//            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                    | View.INVISIBLE |
-//                    View.SYSTEM_UI_FLAG_FULLSCREEN
-//                    |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.INVISIBLE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View .SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
+    private void clearFocusNotAle(Window window) {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+    }
+
+    public void hideNavigationBar(final Window window) {
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        window.getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                        //布局位于状态栏下方
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                        //全屏
+                        View.SYSTEM_UI_FLAG_FULLSCREEN |
+                        //隐藏导航栏
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+                if (Build.VERSION.SDK_INT >= 19) {
+                    uiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+                } else {
+                    uiOptions |= View.SYSTEM_UI_FLAG_LOW_PROFILE;
+                }
+                window.getDecorView().setSystemUiVisibility(uiOptions);
+            }
+        });
+    }
+
+    public void setTextSize(View v, int size) {
+        if (v instanceof ViewGroup) {
+            ViewGroup parent = (ViewGroup) v;
+            int count = parent.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View child = parent.getChildAt(i);
+                setTextSize(child, size);
+            }
+        } else if (v instanceof TextView) {
+            ((TextView) v).setTextSize(size);
         }
     }
 
-    public void setFullscreen(boolean isShowStatusBar, boolean isShowNavigationBar) {
-        System.out.println("全屏");
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-            getActivity().getWindow().setAttributes(lp);
-        }
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-
-
-        if (!isShowStatusBar) {
-            uiOptions |= View.SYSTEM_UI_FLAG_FULLSCREEN;
-        }
-        if (!isShowNavigationBar) {
-            uiOptions |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        }
-        getActivity().getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-
-        //隐藏标题栏
-//        getActivity().getSupportActionBar().hide();
-        //专门设置一下状态栏导航栏背景颜色为透明，凸显效果。
-//        setNavigationStatusColor(Color.TRANSPARENT);
-    }
-
-    public void setNavigationStatusColor(int color) {
-        //VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-        if (Build.VERSION.SDK_INT >= 21) {
-            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getActivity().getWindow().setNavigationBarColor(color);
-            getActivity().getWindow().setStatusBarColor(color);
-        }
-    }
 }
