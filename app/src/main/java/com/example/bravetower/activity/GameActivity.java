@@ -3,6 +3,7 @@ package com.example.bravetower.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
@@ -43,8 +45,6 @@ public class GameActivity extends BaseActivity{
     private TextView yellowKey;
     private TextView blueKey;
     private TextView redKey;
-    private TextView leftDialogTx;  //对话框
-    private TextView rightDialogTx;
 
     private ImageView upBt;
     private ImageView downBt;
@@ -93,8 +93,6 @@ public class GameActivity extends BaseActivity{
         yellowKey = findViewById(R.id.yellow_key);
         blueKey = findViewById(R.id.blue_key);
         redKey = findViewById(R.id.red_key);
-        leftDialogTx = findViewById(R.id.left_dialog_tx);
-        rightDialogTx = findViewById(R.id.right_dialog_tx);
 
         upBt = findViewById(R.id.control_up);
         downBt = findViewById(R.id.control_down);
@@ -125,27 +123,15 @@ public class GameActivity extends BaseActivity{
     }
     class OnClick implements View.OnClickListener{
 
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onClick(View v) {
             if(v == confirmBt){
                 if(result == 2) {
-                    TalkDialogUtils.showDialog(GameActivity.this,"测试");
+                    TalkDialogUtils.showDialog(GameActivity.this,"测试测试测测试测试测测试测试测测试测试测测试测试测测试测试测测试测试",indexColumn,indexRow);
                 }
             }
         }
-    }
-
-    private void moveDialog(){
-        int left = indexColumn * DeviceManager.widthSize;
-        int top = indexRow * DeviceManager.widthSize;
-//        dialogTx.layout(left,top,left + dialogTx.getWidth(),dialogTx.getHeight());
-//        dialogTx.layout(100,100,500,500);
-        System.out.println("测试");
-//        dialogTx.layout
-//        LinearLayoutCompat.LayoutParams params = (LinearLayoutCompat.LayoutParams) dialogLayout.getLayoutParams();
-//        params.height = 300;
-//        dialogLayout.requestLayout();
-
     }
 
     class OnTouch implements View.OnTouchListener{
@@ -231,7 +217,6 @@ public class GameActivity extends BaseActivity{
                 case 1:
                     break;
                 case 2:
-                    leftDialogTx.setText("测试");
 
                     break;
 
@@ -246,6 +231,7 @@ public class GameActivity extends BaseActivity{
                 for (int column = 0; column < wall[row].length;column++){
                     int value = wall[row][column];
                     if(value !=0){
+                        indexRow = row;
                         indexRow = row;
                         indexColumn = column;
                         indexValue = value;

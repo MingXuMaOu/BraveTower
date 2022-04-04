@@ -319,20 +319,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/left_dialog_tx"
-            android:visibility="gone"
-            android:background="@drawable/left_dialog_bg"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/right_dialog_tx"
-            android:visibility="gone"
-            android:background="@drawable/right_dialog_bg"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
 </FrameLayout>

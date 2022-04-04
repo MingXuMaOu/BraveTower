@@ -1,13 +1,20 @@
 package com.example.bravetower.activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.DisplayCutout;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.lang.reflect.Field;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -20,29 +27,25 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("开始");
         setFullscreen(false,false);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        System.out.println("暂停");
         setFullscreen(false,false);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        System.out.println("测试start");
 //        setFullscreen(false,false);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        System.out.println("测试stop");
-        setFullscreen(false,false);
+//        setFullscreen(false,false);
     }
 
     public void setFullscreen(boolean isShowStatusBar, boolean isShowNavigationBar) {
@@ -51,6 +54,7 @@ public class BaseActivity extends AppCompatActivity {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             getWindow().setAttributes(lp);
         }
+
         int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -79,4 +83,29 @@ public class BaseActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(color);
         }
     }
+    public int getNavigationBarHeight (Activity activity) {
+        Resources resources = activity.getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height","dimen", "android");
+        //获取NavigationBar的高度
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
+
+    private int getStatusBarHeight(Context context) {
+
+        int result = 0;
+
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        if (resourceId > 0) {
+
+                result = context.getResources().getDimensionPixelSize(resourceId);
+
+        }
+
+        return result;
+
+    }
+
+
 }
